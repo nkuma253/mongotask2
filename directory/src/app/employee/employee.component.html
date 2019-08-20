@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col s12">
+            
+      <div class="card">
+          
+        <div class="card-content white-text">
+            <div class="row"> <div class="logo col-lg-12 " style = "margin-top: -70px;"><h1>Employee Record table</h1></div></div>
+          <div class="row">
+        
+            <div class="col s6">
+                <div class="container">
+              <form style="
+              margin-left: -104px;
+          "  #employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="employeeService.selectedEmployee._id">
+               
+                  <div class="input-field col s6">
+                    <input type="text" name="name" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.name" placeholder=" Enter full name" required>
+                    <label>Full Name :
+                      <label class="red-text">*</label>
+                    </label>
+                  </div>
+              
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input type="text" name="position" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Eg : Consultant">
+                    <label>Designation :</label>
+                  </div>
+                </div>
+            
+                  <div class="input-field col s6">
+                    <input type="text" name="office" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.office" placeholder="Enter office location">
+                    <label>Address :</label>
+                  </div>
+              
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input type="text" name="salary" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="Salary per annum">
+                    <label>Salary :</label>
+                  </div>
+                </div>
+  
+                    <div   class="form-field">
+                    <button class="btn purple accent-2 right" style="margin-right:199px; " type="button" (click)="resetForm(employeeForm)">Reset</button>
+                    <button class="btn blue darken-3 right" type="submit" [disabled]="!employeeForm.valid">Submit</button>
+                  </div>
+            
+              </form>
+              </div>
+            </div>
+              
+
+            
+            <div class="col s6">
+                <!-- <nav class="width2">
+                    <input class="form-control" type="text" name="search" [(ngModel)]="filter">      
+                  </nav> -->
+                  <input type="text" class="form-control" style ="width:200px;" type="text"  name="search" [(ngModel)]="filter"
+                   autocomplete="off" 
+                   placeholder="&#61442;  search by field "><br>
+                   <table class="table table-bordered table-striped"> 
+                    <thead>
+                      <tr>
+                        <th >Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th (click)="sort('salary')">Amount
+                            <span class="glyphicon sort-icon" *ngIf="key =='salary'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                  
+                    <tr *ngFor="let emp of employeeService.employees|orderBy: key : reverse | filter:filter |paginate: { itemsPerPage: 2, currentPage: p } ;">
+                      <td>{{emp.name}}</td>
+                      <td>{{emp.position}}</td>
+                      <td>{{emp.office}}</td>
+                      <td>{{emp.salary}}</td>
+                      <td>
+                          <a class="action-btn btn blue lighten-4" (click)="onEdit(emp)">
+                            edit
+                          </a>
+                          <a class="action-btn btn red accent-4" (click)="onDelete(emp._id,employeeForm)">
+                            delete
+                          </a>
+                        </td>
+                    </tr>
+                  </table>
+                 <div style="
+                 text-align: center;
+             "> <pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
